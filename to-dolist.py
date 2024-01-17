@@ -1,6 +1,24 @@
 from tkinter import *
 from tkinter import messagebox
 
+try:
+    with open("todolist.txt", "r") as f:
+        pass
+except FileNotFoundError:
+    with open("todolist.txt", "w") as f:
+        pass
+
+def saveData():
+    with open("todolist.txt", "w") as f:
+        f.write("\n".join(task_list.get()))
+
+    messagebox.showinfo("Success", "Tasks have been saved")
+
+def getData():
+    with open("todolist.txt", "r") as f:
+        return (f.read().split("\n"))
+
+
 def newTask():
     task = my_entry.get()
     if task != "":
@@ -49,5 +67,9 @@ addTask_btn.pack(fill=BOTH, expand=True, side=LEFT,padx=5, ipadx=6)
 delTask_btn = Button(button_frame, text='Delete Task', font=('comicsansms 14 bold'),
     bg='#ff8b61', padx=20, pady=4, command=deleteTask, width=9, relief=SUNKEN)
 delTask_btn.pack(fill=BOTH, expand=True, side=LEFT,padx=5, ipadx=1)
+
+saveTask_btn = Button(button_frame, text='Save Tasks', font=('comicsansms 14 bold'),
+    bg='#ff8b61', padx=20, pady=4, command=saveData, width=9, relief=SUNKEN)
+saveTask_btn.pack(fill=BOTH, expand=True, side=LEFT,padx=5, ipadx=1)
 
 kap.mainloop()
